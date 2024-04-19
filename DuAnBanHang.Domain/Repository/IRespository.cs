@@ -4,7 +4,7 @@ namespace DuAnBanHang.Domain.Repository
 {
     public interface IRespository<T> where T : class
     {
-        public Task<ICollection<T>> GetAll(Expression<Func<T, bool>> filter = null);
+        public Task<IQueryable<T>> GetAll(Expression<Func<T, bool>> filter = null);
         public Task<T> FirstOrDefault(Expression<Func<T, bool>> filter = null);
         public Task<T> GetById(dynamic id);
         public Task<bool> CreateObj(T obj);

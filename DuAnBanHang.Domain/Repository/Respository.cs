@@ -49,13 +49,13 @@ namespace DuAnBanHang.Domain.Repository
             }
             return await context.Set<T>().FirstOrDefaultAsync();
         }
-        public async Task<ICollection<T>> GetAll(Expression<Func<T, bool>> filter = null)
+        public async Task<IQueryable<T>> GetAll(Expression<Func<T, bool>> filter = null)
         {
             if (filter != null)
             {
-                return await context.Set<T>().Where(filter).ToListAsync();
+                return (IQueryable<T>)await context.Set<T>().Where(filter).ToListAsync();
             }
-            return await context.Set<T>().ToListAsync();
+            return (IQueryable<T>)await context.Set<T>().ToListAsync();
         }
 
         public async Task<T> GetById(dynamic id)
