@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq.Expressions;
 
 namespace DuAnBanHang.Domain.Repository
 {
     public interface IRespository<T> where T : class
     {
-        public IQueryable<T> GetAll();
-        public T GetById(dynamic id);
-        public bool Create(T entity);
-        public bool Update(T entity);
-        public bool UpdateRange(List<T> LstEntity);
-        public bool Delete(dynamic id);
+        public Task<ICollection<T>> GetAll(Expression<Func<T, bool>> filter = null);
+        public Task<T> FirstOrDefault(Expression<Func<T, bool>> filter = null);
+        public Task<T> GetById(dynamic id);
+        public Task<bool> CreateObj(T obj);
+        public Task<bool> UpdateObj(T obj);
+        public Task<bool> DeleteObj(dynamic id);
     }
 }

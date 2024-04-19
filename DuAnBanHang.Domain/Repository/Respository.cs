@@ -1,30 +1,23 @@
 ﻿using DuAnBanHang.Domain.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Linq.Expressions;
 
 namespace DuAnBanHang.Domain.Repository
 {
-    public class Respository<G> : IRespository<G> where G : class
+    public class Respository<T> : IRespository<T> where T : class
     {
         WebBanHangContext context;
-        DbSet<G> dbSet; // CRUD trên DBset vì nó đại diện cho bảng
-        // Khi cần gọi lại va dùng thật thì cần chính xác nó là DBSet nào
-        //Lúc đó ta sẽ gán DbSet = DBSet cần dùng 
-        public Respository(DbSet<G> dbset, WebBanHangContext context)
+      
+        public Respository( WebBanHangContext context)
         {
-            dbSet = dbset; //gán lại khi dùng
             this.context = context;
         }
-        public bool Create(G obj)
+        public async Task<bool> CreateObj(T obj)
         {
             try
             {
-                dbSet.Add(obj);
-                context.SaveChanges();
+                await context.Set<T>().AddAsync(obj);
+                await context.SaveChangesAsync();
                 return true;
             }
             catch (Exception)
@@ -33,14 +26,14 @@ namespace DuAnBanHang.Domain.Repository
             }
         }
 
-        public bool Delete(dynamic id)
+        public async Task<bool> DeleteObj(dynamic id)
         {
             try
             {
-                var deleteObj = dbSet.Find(id);// Find truyền vào thuộc tính
-                // chỉ sử dụng với PK
-                dbSet.Remove(deleteObj);
-                context.SaveChanges();
+                var obj = await context.Set<T>().FindAsync(id);
+                if (obj == null) return false;
+                context.Set<T>().Remove(obj);
+                await context.SaveChangesAsync();
                 return true;
             }
             catch (Exception)
@@ -48,40 +41,45 @@ namespace DuAnBanHang.Domain.Repository
                 return false;
             }
         }
-
-        public ICollection<G> GetAll()
+        public async Task<T> FirstOrDefault(Expression<Func<T, bool>> filter = null)
         {
-            return dbSet.ToList();
+            if (filter != null)
+            {
+                return await context.Set<T>().FirstOrDefaultAsync(filter);
+            }
+            return await context.Set<T>().FirstOrDefaultAsync();
+        }
+        public async Task<ICollection<T>> GetAll(Expression<Func<T, bool>> filter = null)
+        {
+            if (filter != null)
+            {
+                return await context.Set<T>().Where(filter).ToListAsync();
+            }
+            return await context.Set<T>().ToListAsync();
         }
 
-        public G GetById(dynamic id)
+        public async Task<T> GetById(dynamic id)
         {
-            return dbSet.Find(id);
+            return await context.Set<T>().FindAsync(id);
         }
 
-        public bool Update(G obj)
+
+        public async Task<bool> UpdateObj(T obj)
         {
             try
             {
-                // chỉ sử dụng với PK
-                dbSet.Update(obj);//Sửa
-                context.SaveChanges();//Lưu lại
+                context.Set<T>().Update(obj);
+                await context.SaveChangesAsync();
                 return true;
             }
-            catch (Exception)
-            {
-                return false;
-            }
+            catch (Exception) { return false; }
         }
 
-        public bool UpdateRange(List<G> LstEntity)
+        public bool UpdateRange(List<T> LstEntity)
         {
             throw new NotImplementedException();
         }
 
-        IQueryable<G> IRespository<G>.GetAll()
-        {
-            throw new NotImplementedException();
-        }
+   
     }
 }
