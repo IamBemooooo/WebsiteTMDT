@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DuAnBanHang.Domain", "DuAnBanHang.Domain\DuAnBanHang.Domain.csproj", "{699D911F-369C-4A5C-9BDF-85472845BC0F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DuAnBanHang.Domain", "DuAnBanHang.Domain\DuAnBanHang.Domain.csproj", "{699D911F-369C-4A5C-9BDF-85472845BC0F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DuAnBanHang.API", "DuAnBanHang.API\DuAnBanHang.API.csproj", "{E319D4B1-A68E-4F83-97D7-9BC20BB05A70}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{699D911F-369C-4A5C-9BDF-85472845BC0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{699D911F-369C-4A5C-9BDF-85472845BC0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{699D911F-369C-4A5C-9BDF-85472845BC0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E319D4B1-A68E-4F83-97D7-9BC20BB05A70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E319D4B1-A68E-4F83-97D7-9BC20BB05A70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E319D4B1-A68E-4F83-97D7-9BC20BB05A70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E319D4B1-A68E-4F83-97D7-9BC20BB05A70}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
